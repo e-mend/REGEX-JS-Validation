@@ -22,9 +22,18 @@ form{
 
 input, select, textarea{
     width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+
     padding: 10px;
     border: 1px solid #ccc;
     font-size: 1.1rem;
+}
+
+textarea{
+    height: 200px;
+    max-height: 200px;
+    min-height: 200px;
 }
 
 button{
@@ -33,4 +42,5 @@ button{
     border: none;
     background-color: #333;
     color: #fff;
+    cursor: pointer;
 }
