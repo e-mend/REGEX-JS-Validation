@@ -23,15 +23,19 @@
             
             <label for="nome">NOME:</label>
             <input type="text" name="name" id="name" placeholder="DIGITE SEU NOME">
+            <span id="name-error"></span>
 
             <label for="email">E-MAIL:</label>
             <input type="text" name="email" id="email" placeholder="DIGITE SEU E-MAIL">
+            <span id="email-error"></span>
             
             <label for="password">SENHA:</label>
             <input type="password" name="password" id="password" placeholder="DIGITE SUA SENHA">
+            <span id="password-error"></span>
 
             <label for="confirme">CONFIRME SUA SENHA:</label>
             <input type="password" name="confirm" id="confirm" placeholder="CONFIRME SUA SENHA">
+            <span id="confirm-error"></span>
 
             <label for="select"></label>
             <select name="" id="select">
@@ -44,6 +48,7 @@
             <textarea name="presentation" id="presentation" cols="30" rows="10"></textarea>
 
             <div class="g-recaptcha" data-sitekey="6Lfv8GElAAAAAAV4P5L8ImXj0whSf0z7GXbXfTaK"></div>
+            <span id="cptcha-error"></span>
 
             <button type="submit">ENVIAR</button>
 

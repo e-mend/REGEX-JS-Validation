@@ -14,23 +14,33 @@ const emailStyle = document.getElementById("email").style;
 const passwordStyle = document.getElementById("password").style;
 const confirmStyle = document.getElementById("confirm").style;
 
+const inputs = document.querySelectorAll("input");
+console.log(inputs);
+
 // Outros jeitos de se testar
 // let results = str.match(regex);
 // let results = regex.test(str);
 // let results = regex.exec(str);
 
 function validarNome(){
-    let nameRegex = /^([a-zA-Z]\s?){4,30}$/g;
+    let nameRegex = /^(?!\s)[a-zA-Z\sàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{1,20}$/g;
     let resultsName = nameRegex.test(nameInput.value);
 
+    let msg = document.getElementById("name-error");
+
     if(nameInput.value === ""){
-        alert("Campo de nome está vazio!");
+        msg.style.display = "block";
+        msg.innerHTML = "Campo obrigatório*";
         nameStyle.borderColor = "red";
         return false;
     }else if(resultsName === false){
-        alert("Tem certeza que esse é seu nome?!");
+        msg.style.display = "block";
+        msg.innerHTML = "Tem certeza que esse é seu nome?!";
+        nameStyle.borderColor = "red";
         return false;
     }else{
+        msg.style.display = "none";
+        msg.innerHTML = "";
         nameStyle.borderColor = "green";
         return true; 
     };
@@ -38,20 +48,25 @@ function validarNome(){
 
 function validarEmail(){
 
-    let emailRegex = /^(?!\.)([a-z0-9\.\-\_]{2,20})@([a-z0-9]{1,61})\.([a-z0-9\-\_]{2,61})([a-z0-9\-\.\_]{1,61})?/gi;
+    let emailRegex = /^(?!\.)([a-z0-9\.\-\_]{2,20})@([a-z0-9]{1,61})\.([a-z0-9\-\_]{2,61})([a-z0-9\-\.\_]{1,61})?(?<=[a-z]$)$/gi;
     let resultsEmail = emailRegex.test(emailInput.value);
 
+    let msg = document.getElementById("email-error");
+
     if(emailInput.value == ""){
-        alert("O campo de e-mail está vazio!");
+        msg.style.display = "block";
+        msg.innerHTML = "E-mail é obrigatório*";
         emailStyle.borderColor = "red";
         return false;
     };
     if(resultsEmail === false){
-        alert("O e-mail é invalido!");
+        msg.style.display = "block";
+        msg.innerHTML = "E-mail é invalido!*";
         emailStyle.borderColor = "red";
         return false;
     }else{
-        alert("O e-mail é valido!");
+        msg.style.display = "none";
+        msg.innerHTML = "";
         emailStyle.borderColor = "green";
         return true;
     };
@@ -62,51 +77,87 @@ function validarSenha(){
     let passwordRegex = /^(?=.*[a-z]+)(?=.*[A-Z]+)(?=.*\d+)(?=.*[@$!%*?&]+)[A-Za-z\d@$!%*?&]{8,16}$/g;
     let resultsPassword = passwordRegex.test(passwordInput.value);
 
+    let msg = document.getElementById("password-error");
+
     if(passwordInput.value == ""){
-        alert("O campo de senha está vazio!");
+        msg.style.display = "block";
+        msg.innerHTML = "Campo obrigatório*";
         passwordStyle.borderColor = "red";
         return false;
     }else if(resultsPassword === false){
-        alert("A senha é invalida!");
+        msg.style.display = "block";
+        msg.innerHTML = "Senha é invalida!*";
         passwordStyle.borderColor = "red";
         return false;
     }else{
-        alert("Senha segue padrão correto!");
+        msg.style.display = "none";
+        msg.innerHTML = "";
         passwordStyle.borderColor = "green";
         return true;
     };
 };
 
 function confirmPassword(){
+
+    let msg = document.getElementById("confirm-error");
+
     if(passwordInput.value == ""){
+        msg.style.display = "block";
+        msg.innerHTML = "Digite a senha novamente!";
         confirmStyle.borderColor = "red";
         return false;
     }else if(passwordInput.value !== confirmInput.value){
-        alert("As senhas NÃO conferem!");
+        msg.style.display = "block";
+        msg.innerHTML = "Senhas não conferem!";
         confirmStyle.borderColor = "red";
         return false;
     }else{
-        alert("As senhas conferem!");
+        msg.style.display = "none";
+        msg.innerHTML = "";
         confirmStyle.borderColor = "green";
         return true;
     };
 };
 
 function recaptcha(){
+
+    let msg = document.getElementById("cptcha-error");
+
     if(grecaptcha.getResponse() != ""){
-        alert("deu boa!")
         return true;
     }else{
-        alert("Por favor selecione a verificação Recaptcha!");
+        msg.style.display = "block";
+        msg.innerHTML = "Preencha a validação RECAPTCHA";
         return false;
     };
 };
+
+// evento mudança no input
+
+inputs[0].addEventListener("input", (event) =>{
+    validarNome();
+});
+
+inputs[1].addEventListener("input", (event) =>{
+    validarEmail();
+});
+inputs[2].addEventListener("input", (event) =>{
+    validarSenha();
+});
+inputs[3].addEventListener("input", (event) =>{
+    confirmPassword();
+});
+    // validarNome();
+    // validarEmail();
+    // validarSenha();
+    // confirmPassword();
+    // recaptcha();
 
 
 form.addEventListener("submit", (event) => {
     event.preventDefault();
 
-
+    
 
     if(validarNome() && validarEmail() && validarSenha() && confirmPassword() && recaptcha()){
         form.submit();

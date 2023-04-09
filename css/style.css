@@ -29,10 +29,10 @@ input, select, textarea{
     border: 1px solid #ccc;
     font-size: 1.1rem;
 }
-/* 
+
 input:focus, select:focus, textarea:focus{
     outline: none;
-} */
+}
 
 textarea{
     height: 200px;
@@ -47,4 +47,34 @@ button{
     background-color: #333;
     color: #fff;
     cursor: pointer;
+}
+
+#name-error{
+    color:red;
+    display: none;
+}
+
+#email-error{
+    color:red;
+    display: none;
+}
+
+#password-error{
+    color:red;
+    display: none;
+}
+
+#confirm-error{
+    color:red;
+    display: none;
+}
+
+.g-recaptcha{
+    margin: 0 auto;
+}
+
+#cptcha-error{
+    color:red;
+    display: none;
+    margin: 0 auto;
 }
