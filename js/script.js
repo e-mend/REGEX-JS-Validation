@@ -14,20 +14,25 @@ const emailStyle = document.getElementById("email").style;
 const passwordStyle = document.getElementById("password").style;
 const confirmStyle = document.getElementById("confirm").style;
 
-
 // Outros jeitos de se testar
 // let results = str.match(regex);
 // let results = regex.test(str);
 // let results = regex.exec(str);
 
 function validarNome(){
-    if(nameInput.value != ""){
-        nameStyle.borderColor = "green";
-        return true;
-    }else{
+    let nameRegex = /^([a-zA-Z]\s?){4,30}$/g;
+    let resultsName = nameRegex.test(nameInput.value);
+
+    if(nameInput.value === ""){
         alert("Campo de nome está vazio!");
         nameStyle.borderColor = "red";
         return false;
+    }else if(resultsName === false){
+        alert("Tem certeza que esse é seu nome?!");
+        return false;
+    }else{
+        nameStyle.borderColor = "green";
+        return true; 
     };
 };
 
@@ -68,20 +73,32 @@ function validarSenha(){
     }else{
         alert("Senha segue padrão correto!");
         passwordStyle.borderColor = "green";
-        return;
+        return true;
     };
 };
 
 function confirmPassword(){
     if(passwordInput.value == ""){
         confirmStyle.borderColor = "red";
+        return false;
     }else if(passwordInput.value !== confirmInput.value){
         alert("As senhas NÃO conferem!");
         confirmStyle.borderColor = "red";
+        return false;
     }else{
         alert("As senhas conferem!");
         confirmStyle.borderColor = "green";
-        return;
+        return true;
+    };
+};
+
+function recaptcha(){
+    if(grecaptcha.getResponse() != ""){
+        alert("deu boa!")
+        return true;
+    }else{
+        alert("Por favor selecione a verificação Recaptcha!");
+        return false;
     };
 };
 
@@ -89,29 +106,11 @@ function confirmPassword(){
 form.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    // validação nome
-
-    validarNome();
-
-    // validação email
-
-    validarEmail();
-
-    // validação senha e confirmação de senha
-
-    validarSenha();
 
 
-    // recaptcha
-
-        if(grecaptcha.getResponse() != ""){
-            return false;
-        };
-
-
-    
-
-    // form.submit();
+    if(validarNome() && validarEmail() && validarSenha() && confirmPassword() && recaptcha()){
+        form.submit();
+    };
 });
 
 
